@@ -92,11 +92,27 @@
             "block_heading": "Delayed-release capsule",
             "block_description": "Delayed-release capsule and acid-resistant strains guarantee the majority of the bacteria reach your colon, alive and active, ready to get to work."
           }
+        },
+        "text_zjijgz": {
+          "type": "text",
+          "settings": {
+            "block_heading": "Third-party tested",
+            "block_description": "Delayed-release capsule and acid-resistant strains guarantee the majority of the bacteria reach your colon, alive and active, ready to get to work."
+          }
+        },
+        "text_fAN6Yi": {
+          "type": "text",
+          "settings": {
+            "block_heading": "High-quality ingredients",
+            "block_description": "Delayed-release capsule and acid-resistant strains guarantee the majority of the bacteria reach your colon, alive and active, ready to get to work."
+          }
         }
       },
       "block_order": [
         "text_tdJcUX",
-        "text_fNKh9Q"
+        "text_fNKh9Q",
+        "text_zjijgz",
+        "text_fAN6Yi"
       ],
       "settings": {
         "desktop_image_width": "medium",
