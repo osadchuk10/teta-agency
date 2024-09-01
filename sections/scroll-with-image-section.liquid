@@ -1,3 +1,4 @@
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -11,6 +12,37 @@
     }
   }
 {%- endstyle -%}
+<style>
+  .block-title {
+    display: flex;
+    align-items: center;
+  }
+  .checkpoint {
+    background: #5c6ac4;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    border-radius: 50%;
+    margin-right: 50px;
+  }
+  .block-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+  }
+  .block-content-description {
+    margin-left: 20px;
+  }
+  .block-heading {
+    text-align: left;
+    width: 100%;
+  }
+  .block-container{
+    max-height: 350px;
+    overflow: auto;
+  }
+</style>
 
 <div class="section-{{ section.id }}-padding container">
   <div class="page-width">
@@ -47,19 +79,22 @@
             {%- endif -%}
           </div>
         </div>
-        <div class="image-with-text__text-item grid__item">
-          <h2>{{ section.settings.description_title }}</h2>
-          <p>{{ section.settings.description_content }}</p>
+        <div class="image-with-text__text-item grid__item block-content">
+           <h2 class="block-heading">{{ section.settings.description_title }}</h2>
+          <p class="">{{ section.settings.description_content }}</p>
           <div class="block-container">
             {% for block in section.blocks %}
               {% if block.type == 'text' %}
-                <h3>{{ block.settings.block_heading }}</h3>
-                <p>{{ block.settings.block_description }}</p>                
-              {% endif %}
-              
-            {% endfor %}
-          </div>
+                <div class="block-title">
+                  <h3 class="block-title">
+                    <span class="checkpoint"></span><span>{{ block.settings.block_heading }}</span>
+                  </h3>
+                </div>
 
+                <p class="block-content-description">{{ block.settings.block_description }}</p>
+              {% endif %}
+            {% endfor %}
+          </div> 
         </div>
       </div>
     </div>
@@ -150,7 +185,7 @@
       "type": "text",
       "id": "description_content",
       "label": "Description content",
-      "default":"Set your description"
+      "default": "Set your description"
     },
     {
       "type": "range",
