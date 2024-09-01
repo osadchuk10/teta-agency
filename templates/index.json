@@ -85,10 +85,18 @@
             "block_heading": "Acid-resistant strains",
             "block_description": "100% survival through simulated digestion* (stomach acid, bile salts, and digestive enzymes)"
           }
+        },
+        "text_fNKh9Q": {
+          "type": "text",
+          "settings": {
+            "block_heading": "Delayed-release capsule",
+            "block_description": "Delayed-release capsule and acid-resistant strains guarantee the majority of the bacteria reach your colon, alive and active, ready to get to work."
+          }
         }
       },
       "block_order": [
-        "text_tdJcUX"
+        "text_tdJcUX",
+        "text_fNKh9Q"
       ],
       "settings": {
         "desktop_image_width": "medium",
