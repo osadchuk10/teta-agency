@@ -39,6 +39,8 @@
   transition: max-height 0.3s ease;
   position: relative;
   overflow: hidden;
+  text-align: left;
+  width: 100%;
 }
 
 .block-container-content {
@@ -62,4 +64,8 @@
   background-color: #4caf50;
   transition: height 0.2s ease;
   left: 2px;
+}
+.block-description{
+  width: 100%;
+  text-align: left;
 }
