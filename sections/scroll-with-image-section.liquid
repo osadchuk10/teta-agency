@@ -4,7 +4,6 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -18,7 +17,7 @@
     align-items: center;
   }
   .checkpoint {
-    background: #5c6ac4;
+    /* background: #5c6ac4; */
     width: 10px;
     height: 10px;
     display: flex;
@@ -46,8 +45,6 @@
     height: auto !important;
   }
   .block-container {
-    /*max-height: 0px;
-    overflow: hidden; */
     transition: max-height 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -65,16 +62,15 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 5px; /* Ширина прогрес-бару */
-    background-color: #f3f3f3; /* Колір фону прогрес-бару */
-    height: 100%; /* Висота прогрес-бару (повна висота контейнера) */
+    width: 5px; 
+    height: 100%; 
   }
-
   .progress-bar-inner {
     position: absolute;
     width: 100%;
-    background-color: #4caf50; /* Колір прогресу */
-    transition: height 0.2s ease; /* Плавна анімація */
+    background-color: #4caf50;
+    transition: height 0.2s ease; 
+    left: 2px;
   }
 </style>
 
@@ -107,7 +103,7 @@
           <p class="">{{ section.settings.description_content }}</p>
           <div class="block-container">
             <div class="progress-bar">
-              <div class="progress-bar-inner"><span class="empty-element"></span></div>
+              <div class="progress-bar-inner" style="color: {{ section.settings.progres_bar_color }}"><span class="empty-element"></span></div>
             </div>
 
             {% for block in section.blocks %}
@@ -115,7 +111,7 @@
                 <div class="block-container-content">
                   <div class="block-title">
                     <h3 class="block-title">
-                      <span class="checkpoint"></span><span>{{ block.settings.block_heading }}</span>
+                      <span class="checkpoint" style="color: {{ section.settings.progres_bar_color }}"></span><span>{{ block.settings.block_heading }}</span>
                     </h3>
                   </div>
                   <p class="block-content-description">{{ block.settings.block_description }}</p>
@@ -271,6 +267,12 @@
       "id": "description_content",
       "label": "Description content",
       "default": "Set your description"
+    },
+    {
+      "type": "color",
+      "id": "progres_bar_color",
+      "default": "#00026E",
+      "label": "Progress Bar Colour"
     },
     {
       "type": "range",
