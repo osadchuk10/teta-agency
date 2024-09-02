@@ -63,8 +63,3 @@
   transition: height 0.2s ease;
   left: 2px;
 }
-.image-content-item {
-  position: -webkit-sticky !important;
-  position: sticky !important;
-  top: 0 !important;
-}
