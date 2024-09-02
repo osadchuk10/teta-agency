@@ -17,7 +17,6 @@
     align-items: center;
   }
   .checkpoint {
-    /* background: #5c6ac4; */
     width: 10px;
     height: 10px;
     display: flex;
@@ -103,7 +102,7 @@
           <p class="">{{ section.settings.description_content }}</p>
           <div class="block-container">
             <div class="progress-bar">
-              <div class="progress-bar-inner" style="color: {{ section.settings.progres_bar_color }}"><span class="empty-element"></span></div>
+              <div class="progress-bar-inner" style="background: {{ section.settings.progres_bar_color }}"><span class="empty-element"></span></div>
             </div>
 
             {% for block in section.blocks %}
@@ -111,7 +110,7 @@
                 <div class="block-container-content">
                   <div class="block-title">
                     <h3 class="block-title">
-                      <span class="checkpoint" style="color: {{ section.settings.progres_bar_color }}"></span><span>{{ block.settings.block_heading }}</span>
+                      <span class="checkpoint" style="background: {{ section.settings.progres_bar_color }}"></span><span>{{ block.settings.block_heading }}</span>
                     </h3>
                   </div>
                   <p class="block-content-description">{{ block.settings.block_description }}</p>
