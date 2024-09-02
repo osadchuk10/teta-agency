@@ -1,4 +1,6 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+{{ 'scroll-with-image-section.css' | asset_url | stylesheet_tag }}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -11,78 +13,6 @@
     }
   }
 {%- endstyle -%}
-<style>
-  .block-title {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-  }
-  .checkpoint {
-    width: 10px;
-    height: 10px;
-    display: flex;
-    border-radius: 50%;
-    margin-right: 50px;
-  }
-  .block-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px;
-  }
-  .block-content-description {
-    margin-left: 20px;
-  }
-  .block-heading {
-    text-align: left;
-    width: 100%;
-    font-weight: 600;
-  }
-
-  .custom-media {
-    border: none;
-    transition: opacity 0.5s ease;
-    background: none;
-  }
-  .custom-media img {
-    position: sticky !important;
-    top: 20% !important;
-    height: auto !important;
-  }
-  .block-container {
-    transition: max-height 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .block-container-content {
-    position: relative;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .block-container-content.visible {
-    opacity: 1;
-  }
-  .progress-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 5px;
-    height: 100%;
-  }
-  .progress-bar-inner {
-    position: absolute;
-    width: 100%;
-    background-color: #4caf50;
-    transition: height 0.2s ease;
-    left: 2px;
-  }
-  .image-content-item {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: 0 !important;
-  }
-</style>
 
 <div class="section-{{ section.id }}-padding container">
   <div class="page-width">
@@ -141,77 +71,9 @@
     </div>
   </div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    updateScrollAndProgresBar();
-  });
-  document.addEventListener('shopify:section:load', function (event) {
-    updateScrollAndProgresBar();
-  });
-  document.addEventListener('shopify:section:select', function (event) {
-    updateScrollAndProgresBar();
-  });
-  function updateScrollAndProgresBar() {
-    const blockContainer = document.querySelector('.block-container');
-    const blocks = document.querySelectorAll('.block-container-content');
-    const progressBarInner = document.querySelector('.progress-bar-inner');
-    const checkpoint = document.querySelector('.checkpoint');
-    const image = document.querySelector('.custom-media');
 
-    function updateBlocksVisibility() {
-      const viewportHeight = window.innerHeight;
-      const viewportMiddle = window.scrollY + viewportHeight / 2;
+{{ 'scroll-with-image-section.js' | asset_url | script_tag }}
 
-      blocks.forEach((block) => {
-        const blockRect = block.getBoundingClientRect();
-        const blockTop = blockRect.top + window.scrollY;
-        const blockBottom = blockRect.bottom + window.scrollY;
-        const isVisible = blockBottom >= window.scrollY && blockTop <= viewportMiddle;
-
-        if (isVisible) {
-          block.classList.add('visible');
-        } else {
-          block.classList.remove('visible');
-        }
-      });
-
-      updateProgressBar();
-    }
-
-    function updateProgressBar() {
-      const containerRect = blockContainer.getBoundingClientRect();
-      const containerTop = containerRect.top + window.scrollY;
-      const containerHeight = Math.max(blockContainer.clientHeight, containerRect.height);
-
-      const viewportMiddle = window.scrollY + window.innerHeight / 2;
-
-      const scrollPosition = Math.max(window.scrollY - containerTop, 0);
-      const progress = Math.max(Math.min((scrollPosition / (containerHeight - window.innerHeight)) * 100, 100), 0);
-
-      let visibleHeight = 0;
-      blocks.forEach((block) => {
-        const blockRect = block.getBoundingClientRect();
-        const blockTop = blockRect.top + window.scrollY;
-        const blockBottom = blockRect.bottom + window.scrollY;
-
-        if (blockTop < viewportMiddle) {
-          visibleHeight += blockRect.height;
-        }
-      });
-
-      if (checkpoint) {
-        const checkpointRect = checkpoint.getBoundingClientRect();
-        const checkpointTop = checkpointRect.top - containerRect.top;
-        progressBarInner.style.top = `${checkpointTop}px`;
-        progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
-      }
-    }
-
-    window.addEventListener('scroll', updateBlocksVisibility);
-
-    updateBlocksVisibility();
-  }
-</script>
 {% schema %}
 {
   "name": "Image with scroll",
