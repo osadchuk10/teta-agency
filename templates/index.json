@@ -164,11 +164,12 @@
         "text_9fAym8"
       ],
       "settings": {
+        "image": "shopify:\/\/shop_images\/7eb280172822e19e22643261d9ac46ce.jpg",
         "desktop_image_width": "medium",
         "layout": "image_first",
-        "description_title": "Set your title",
-        "description_content": "Set your description",
-        "content_color": "#00026E",
+        "description_title": "Set your titleds d",
+        "description_content": "Set your descriptionsd sd",
+        "content_color": "#00026e",
         "padding_top": 36,
         "padding_bottom": 36
       }
