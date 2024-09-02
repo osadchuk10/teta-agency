@@ -106,7 +106,6 @@
           <h2 class="block-heading">{{ section.settings.description_title }}</h2>
           <p class="">{{ section.settings.description_content }}</p>
           <div class="block-container">
-            
             <div class="progress-bar">
               <div class="progress-bar-inner"><span class="empty-element"></span></div>
             </div>
@@ -130,58 +129,69 @@
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const blockContainer = document.querySelector('.block-container');
-  const blocks = document.querySelectorAll('.block-container-content');
-  const progressBarInner = document.querySelector('.progress-bar-inner');
-  const checkpoints = document.querySelectorAll('.checkpoint');
+  document.addEventListener('DOMContentLoaded', function () {
+    const blockContainer = document.querySelector('.block-container');
+    const blocks = document.querySelectorAll('.block-container-content');
+    const progressBarInner = document.querySelector('.progress-bar-inner');
+    const checkpoint = document.querySelector('.checkpoint');
 
-  function updateBlocksVisibility() {
-    const viewportHeight = window.innerHeight;
-    const viewportMiddle = window.scrollY + viewportHeight / 2;
+    function updateBlocksVisibility() {
+      const viewportHeight = window.innerHeight;
+      const viewportMiddle = window.scrollY + viewportHeight / 2;
 
-    blocks.forEach((block) => {
-      const blockRect = block.getBoundingClientRect();
-      const blockTop = blockRect.top + window.scrollY;
-      const blockBottom = blockRect.bottom + window.scrollY;
-      const isVisible = blockBottom >= window.scrollY && blockTop <= viewportMiddle;
+      blocks.forEach((block) => {
+        const blockRect = block.getBoundingClientRect();
+        const blockTop = blockRect.top + window.scrollY;
+        const blockBottom = blockRect.bottom + window.scrollY;
+        const isVisible = blockBottom >= window.scrollY && blockTop <= viewportMiddle;
 
-      if (isVisible) {
-        block.classList.add('visible');
-      } else {
-        block.classList.remove('visible');
-      }
-    });
+        if (isVisible) {
+          block.classList.add('visible');
+        } else {
+          block.classList.remove('visible');
+        }
+      });
 
-    updateProgressBar();
-  }
+      updateProgressBar();
+    }
 
-  function updateProgressBar() {
-    const containerRect = blockContainer.getBoundingClientRect();
-    const containerTop = containerRect.top + window.scrollY;
-    const containerHeight = blockContainer.scrollHeight;
-    
+    function updateProgressBar() {
+      const containerRect = blockContainer.getBoundingClientRect();
+      const containerTop = containerRect.top + window.scrollY;
+      const containerHeight = blockContainer.scrollHeight;
 
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const progress = Math.min((scrollPosition / containerHeight) * 100, 100);
+      const viewportMiddle = window.scrollY + window.innerHeight / 2;
+      const totalHeight = containerHeight;
 
-    if (checkpoints.length > 0) {
-      checkpoints.forEach((checkpoint) => {
+      // Calculate the progress based on the scroll position
+      const scrollPosition = Math.max(window.scrollY - containerTop, 0);
+      const progress = Math.min((scrollPosition / totalHeight) * 100, 100);
+
+      // Find the height of the visible section
+      let visibleHeight = 0;
+      blocks.forEach((block) => {
+        const blockRect = block.getBoundingClientRect();
+        const blockTop = blockRect.top + window.scrollY;
+        const blockBottom = blockRect.bottom + window.scrollY;
+
+        if (blockTop < viewportMiddle && blockBottom > window.scrollY) {
+          visibleHeight += blockRect.height;
+        }
+      });
+
+      if (checkpoint) {
         const checkpointRect = checkpoint.getBoundingClientRect();
-        const checkpointTop = checkpointRect.top - containerRect.top; 
-
+        const checkpointTop = checkpointRect.top - containerRect.top;
 
         progressBarInner.style.top = `${checkpointTop}px`;
-
-        progressBarInner.style.height = `${progress}%`;
-      });
+        progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
+      }
     }
-  }
 
-  window.addEventListener('scroll', updateBlocksVisibility);
-  updateBlocksVisibility();
-});
+    window.addEventListener('scroll', updateBlocksVisibility);
 
+    updateBlocksVisibility();
+  });
 </script>
 {% schema %}
 {
