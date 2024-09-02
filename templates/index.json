@@ -131,6 +131,13 @@
         "text_kEpHGJ": {
           "type": "text",
           "settings": {
+            "block_heading": "Set your headingsd ds",
+            "block_description": "Set your description here in your blocksd sdsddddddddddddddd"
+          }
+        },
+        "text_rEc7EA": {
+          "type": "text",
+          "settings": {
             "block_heading": "Set your heading",
             "block_description": "Set your description here in your block"
           }
@@ -159,6 +166,7 @@
       },
       "block_order": [
         "text_kEpHGJ",
+        "text_rEc7EA",
         "text_BKUqpF",
         "text_VQjJXH",
         "text_9fAym8"
