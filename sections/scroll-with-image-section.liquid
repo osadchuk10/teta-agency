@@ -141,6 +141,15 @@
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    updateScrollAndProgresBar();
+  });
+  document.addEventListener('shopify:section:load', function (event) {
+    updateScrollAndProgresBar();
+  });
+  document.addEventListener('shopify:section:select', function (event) {
+    updateScrollAndProgresBar();
+  });
+  function updateScrollAndProgresBar() {
     const blockContainer = document.querySelector('.block-container');
     const blocks = document.querySelectorAll('.block-container-content');
     const progressBarInner = document.querySelector('.progress-bar-inner');
@@ -194,13 +203,12 @@
         progressBarInner.style.top = `${checkpointTop}px`;
         progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
       }
-
     }
 
     window.addEventListener('scroll', updateBlocksVisibility);
 
     updateBlocksVisibility();
-  });
+  }
 </script>
 {% schema %}
 {
