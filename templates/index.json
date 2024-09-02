@@ -125,63 +125,6 @@
         "padding_bottom": 36
       }
     },
-    "scroll_with_image_section_Rtk66F": {
-      "type": "scroll-with-image-section",
-      "blocks": {
-        "text_kEpHGJ": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your headingsd ds",
-            "block_description": "Set your description here in your blocksd sdsddddddddddddddd"
-          }
-        },
-        "text_rEc7EA": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
-        },
-        "text_BKUqpF": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
-        },
-        "text_VQjJXH": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
-        },
-        "text_9fAym8": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
-        }
-      },
-      "block_order": [
-        "text_kEpHGJ",
-        "text_rEc7EA",
-        "text_BKUqpF",
-        "text_VQjJXH",
-        "text_9fAym8"
-      ],
-      "settings": {
-        "image": "shopify:\/\/shop_images\/7eb280172822e19e22643261d9ac46ce.jpg",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "description_title": "Set your titleds d",
-        "description_content": "Set your descriptionsd sd",
-        "content_color": "#00026e",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_with_text_Vz8qdY": {
       "type": "image-with-text",
       "blocks": {
@@ -233,7 +176,6 @@
     "image_banner",
     "featured_collection",
     "scroll_with_image_section_C9j9x4",
-    "scroll_with_image_section_Rtk66F",
     "image_with_text_Vz8qdY"
   ]
 }
