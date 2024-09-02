@@ -15,6 +15,7 @@
   .block-title {
     display: flex;
     align-items: center;
+    font-weight: 600;
   }
   .checkpoint {
     width: 10px;
@@ -35,6 +36,7 @@
   .block-heading {
     text-align: left;
     width: 100%;
+    font-weight: 600;
   }
 
   .custom-media {
@@ -110,7 +112,7 @@
           <h2 class="block-heading" style="color: {{ section.settings.content_color }}">
             {{ section.settings.description_title }}
           </h2>
-          <p style="color: {{ section.settings.content_color }}">{{ section.settings.description_content }}</p>
+          <p>{{ section.settings.description_content }}</p>
           <div class="block-container">
             <div class="progress-bar">
               <div class="progress-bar-inner" style="background: {{ section.settings.content_color }}">
@@ -127,7 +129,7 @@
                       ><span>{{ block.settings.block_heading }}</span>
                     </h3>
                   </div>
-                  <p class="block-content-description" style="color: {{ section.settings.content_color }}">
+                  <p class="block-content-description">
                     {{ block.settings.block_description }}
                   </p>
                 </div>
