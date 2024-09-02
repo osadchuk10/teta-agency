@@ -140,7 +140,7 @@
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const blockContainer = document.querySelector('.block-container');
     const blocks = document.querySelectorAll('.block-container-content');
     const progressBarInner = document.querySelector('.progress-bar-inner');
@@ -168,45 +168,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateProgressBar() {
-    const containerRect = blockContainer.getBoundingClientRect();
-    const containerTop = containerRect.top + window.scrollY;
-    const containerHeight = Math.max(blockContainer.clientHeight, containerRect.height);
+      const containerRect = blockContainer.getBoundingClientRect();
+      const containerTop = containerRect.top + window.scrollY;
+      const containerHeight = Math.max(blockContainer.clientHeight, containerRect.height);
 
-    const viewportMiddle = window.scrollY + window.innerHeight / 2;
+      const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
-    const scrollPosition = Math.max(window.scrollY - containerTop, 0);
-    const progress = Math.max(Math.min((scrollPosition / (containerHeight - window.innerHeight)) * 100, 100), 0);
+      const scrollPosition = Math.max(window.scrollY - containerTop, 0);
+      const progress = Math.max(Math.min((scrollPosition / (containerHeight - window.innerHeight)) * 100, 100), 0);
 
-    let visibleHeight = 0;
-    blocks.forEach((block) => {
+      let visibleHeight = 0;
+      blocks.forEach((block) => {
         const blockRect = block.getBoundingClientRect();
         const blockTop = blockRect.top + window.scrollY;
         const blockBottom = blockRect.bottom + window.scrollY;
 
-        if (blockTop < viewportMiddle && blockBottom > window.scrollY) {
-            visibleHeight += blockRect.height;
+        if (blockTop < viewportMiddle) {
+          visibleHeight += blockRect.height;
         }
-    });
+      });
 
-    if (checkpoint) {
+      if (checkpoint) {
         const checkpointRect = checkpoint.getBoundingClientRect();
         const checkpointTop = checkpointRect.top - containerRect.top;
         progressBarInner.style.top = `${checkpointTop}px`;
         progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
+      }
+
+      // console.log('scrollPosition:', scrollPosition);
+      // console.log('containerHeight:', containerHeight);
+      // console.log('viewportMiddle:', viewportMiddle);
+      // console.log('progress:', progress);
     }
-
-    console.log("scrollPosition:", scrollPosition);
-    console.log("containerHeight:", containerHeight);
-    console.log("viewportMiddle:", viewportMiddle);
-    console.log("progress:", progress);
-}
-
 
     window.addEventListener('scroll', updateBlocksVisibility);
 
     updateBlocksVisibility();
-});
-
+  });
 </script>
 {% schema %}
 {
@@ -298,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       "type": "text",
       "name": "Scroll block",
+      "limit": 7,
       "settings": [
         {
           "type": "text",
@@ -316,7 +315,21 @@ document.addEventListener('DOMContentLoaded', function () {
   ],
   "presets": [
     {
-      "name": "Image with scroll"
+      "name": "Image with scroll",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "text"
+        }
+      ]
     }
   ]
 }
