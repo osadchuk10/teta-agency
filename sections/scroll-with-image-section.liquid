@@ -195,10 +195,6 @@
         progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
       }
 
-      // console.log('scrollPosition:', scrollPosition);
-      // console.log('containerHeight:', containerHeight);
-      // console.log('viewportMiddle:', viewportMiddle);
-      // console.log('progress:', progress);
     }
 
     window.addEventListener('scroll', updateBlocksVisibility);
@@ -221,20 +217,19 @@
       "options": [
         {
           "value": "small",
-          "label": "t:sections.image-with-text.settings.desktop_image_width.options__1.label"
+          "label": "Small"
         },
         {
           "value": "medium",
-          "label": "t:sections.image-with-text.settings.desktop_image_width.options__2.label"
+          "label": "Medium"
         },
         {
           "value": "large",
-          "label": "t:sections.image-with-text.settings.desktop_image_width.options__3.label"
+          "label": "Large"
         }
       ],
       "default": "medium",
-      "label": "t:sections.image-with-text.settings.desktop_image_width.label",
-      "info": "t:sections.image-with-text.settings.desktop_image_width.info"
+      "label": "Image width"
     },
     {
       "type": "select",
@@ -242,16 +237,15 @@
       "options": [
         {
           "value": "image_first",
-          "label": "t:sections.image-with-text.settings.layout.options__1.label"
+          "label": "Image first"
         },
         {
           "value": "text_first",
-          "label": "t:sections.image-with-text.settings.layout.options__2.label"
+          "label": "Text first"
         }
       ],
       "default": "image_first",
-      "label": "t:sections.image-with-text.settings.layout.label",
-      "info": "t:sections.image-with-text.settings.layout.info"
+      "label": "Switch Image and text content"
     },
     {
       "type": "text",
@@ -278,7 +272,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
+      "label": "Top paddin",
       "default": 36
     },
     {
@@ -288,7 +282,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
+      "label": "Bottom padding",
       "default": 36
     }
   ],
