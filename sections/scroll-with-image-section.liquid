@@ -38,41 +38,64 @@
     text-align: left;
     width: 100%;
   }
-  .block-container{
-    max-height: 350px;
-    overflow: auto !important;
+
+  .custom-media {
+    border: none;
+  }
+  .custom-media img {
+    height: auto !important;
+  }
+  .block-container {
+    /*max-height: 0px;
+    overflow: hidden; */
+    transition: max-height 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .block-container-content {
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .block-container-content.visible {
+    opacity: 1;
+  }
+  .progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px; /* Ширина прогрес-бару */
+    background-color: #f3f3f3; /* Колір фону прогрес-бару */
+    height: 100%; /* Висота прогрес-бару (повна висота контейнера) */
+  }
+
+  .progress-bar-inner {
+    position: absolute;
+    width: 100%;
+    background-color: #4caf50; /* Колір прогресу */
+    transition: height 0.2s ease; /* Плавна анімація */
   }
 </style>
 
 <div class="section-{{ section.id }}-padding container">
   <div class="page-width">
-    <div class="image-with-text image-with-text--{{ section.settings.content_layout }} isolate{% if settings.text_boxes_border_thickness > 0 and settings.text_boxes_border_opacity > 0 and settings.media_border_thickness > 0 and settings.media_border_opacity > 0 %} collapse-borders{% endif %}{% unless section.settings.color_scheme == section.settings.section_color_scheme and settings.media_border_thickness > 0 and settings.text_boxes_shadow_opacity == 0 and settings.text_boxes_border_thickness == 0 or settings.text_boxes_border_opacity == 0 %} collapse-corners{% endunless %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="image-with-text">
       <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.layout == 'text_first' %} image-with-text__grid--reverse{% endif %}">
         <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
           <div
-            class="image-with-text__media image-with-text__media--{{ section.settings.height }} global-media-settings{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}{% if section.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}"
-            {% if section.settings.height == 'adapt' and section.settings.image != blank %}
-              style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
-            {% endif %}
+            class="image-with-text__media global-media-settings {% if section.settings.image != blank %} media custom-media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
           >
             {%- if section.settings.image != blank -%}
-              {%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
-                {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
-                {%- capture sizes -%}
-          (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
-          (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
-        {%- endcapture -%}
-              {%- else -%}
-                {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
-                {%- capture sizes -%}
-          (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
-          (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
-        {%- endcapture -%}
-              {%- endif -%}
+              {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+              {%- capture sizes -%}
+                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
+                (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+              {%- endcapture -%}
               {{
                 section.settings.image
                 | image_url: width: 1500
-                | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                | image_tag: sizes: sizes, widths: widths, height: auto, fetchpriority: fetch_priority
               }}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -80,27 +103,86 @@
           </div>
         </div>
         <div class="image-with-text__text-item grid__item block-content">
-           <h2 class="block-heading">{{ section.settings.description_title }}</h2>
+          <h2 class="block-heading">{{ section.settings.description_title }}</h2>
           <p class="">{{ section.settings.description_content }}</p>
           <div class="block-container">
+            
+            <div class="progress-bar">
+              <div class="progress-bar-inner"><span class="empty-element"></span></div>
+            </div>
+
             {% for block in section.blocks %}
               {% if block.type == 'text' %}
-                <div class="block-title">
-                  <h3 class="block-title">
-                    <span class="checkpoint"></span><span>{{ block.settings.block_heading }}</span>
-                  </h3>
+                <div class="block-container-content">
+                  <div class="block-title">
+                    <h3 class="block-title">
+                      <span class="checkpoint"></span><span>{{ block.settings.block_heading }}</span>
+                    </h3>
+                  </div>
+                  <p class="block-content-description">{{ block.settings.block_description }}</p>
                 </div>
-
-                <p class="block-content-description">{{ block.settings.block_description }}</p>
               {% endif %}
             {% endfor %}
-          </div> 
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const blockContainer = document.querySelector('.block-container');
+  const blocks = document.querySelectorAll('.block-container-content');
+  const progressBarInner = document.querySelector('.progress-bar-inner');
+  const checkpoints = document.querySelectorAll('.checkpoint');
 
+  function updateBlocksVisibility() {
+    const viewportHeight = window.innerHeight;
+    const viewportMiddle = window.scrollY + viewportHeight / 2;
+
+    blocks.forEach((block) => {
+      const blockRect = block.getBoundingClientRect();
+      const blockTop = blockRect.top + window.scrollY;
+      const blockBottom = blockRect.bottom + window.scrollY;
+      const isVisible = blockBottom >= window.scrollY && blockTop <= viewportMiddle;
+
+      if (isVisible) {
+        block.classList.add('visible');
+      } else {
+        block.classList.remove('visible');
+      }
+    });
+
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    const containerRect = blockContainer.getBoundingClientRect();
+    const containerTop = containerRect.top + window.scrollY;
+    const containerHeight = blockContainer.scrollHeight;
+    
+
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const progress = Math.min((scrollPosition / containerHeight) * 100, 100);
+
+    if (checkpoints.length > 0) {
+      checkpoints.forEach((checkpoint) => {
+        const checkpointRect = checkpoint.getBoundingClientRect();
+        const checkpointTop = checkpointRect.top - containerRect.top; 
+
+
+        progressBarInner.style.top = `${checkpointTop}px`;
+
+        progressBarInner.style.height = `${progress}%`;
+      });
+    }
+  }
+
+  window.addEventListener('scroll', updateBlocksVisibility);
+  updateBlocksVisibility();
+});
+
+</script>
 {% schema %}
 {
   "name": "Image with scroll",
@@ -133,6 +215,23 @@
     },
     {
       "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "image_first",
+          "label": "t:sections.image-with-text.settings.layout.options__1.label"
+        },
+        {
+          "value": "text_first",
+          "label": "t:sections.image-with-text.settings.layout.options__2.label"
+        }
+      ],
+      "default": "image_first",
+      "label": "t:sections.image-with-text.settings.layout.label",
+      "info": "t:sections.image-with-text.settings.layout.info"
+    },
+    {
+      "type": "select",
       "id": "desktop_content_position",
       "options": [
         {
@@ -150,30 +249,6 @@
       ],
       "default": "top",
       "label": "t:sections.image-with-text.settings.desktop_content_position.label"
-    },
-    {
-      "type": "select",
-      "id": "height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.image-with-text.settings.height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.image-with-text.settings.height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.image-with-text.settings.height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.image-with-text.settings.height.options__4.label"
-        }
-      ],
-      "default": "adapt",
-      "label": "t:sections.image-with-text.settings.height.label"
     },
     {
       "type": "text",
