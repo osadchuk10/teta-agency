@@ -39,8 +39,17 @@
 
   .custom-media {
     border: none;
+    transition: opacity 0.5s ease;
+    background: none;
+    /* position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10; Adjust z-index if needed to ensure it stays above other content */
   }
   .custom-media img {
+    position: sticky !important;
+    top: 20% !important;
     height: auto !important;
   }
   .block-container {
@@ -61,15 +70,20 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 5px; 
-    height: 100%; 
+    width: 5px;
+    height: 100%;
   }
   .progress-bar-inner {
     position: absolute;
     width: 100%;
     background-color: #4caf50;
-    transition: height 0.2s ease; 
+    transition: height 0.2s ease;
     left: 2px;
+  }
+  .image-content-item {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
   }
 </style>
 
@@ -77,9 +91,9 @@
   <div class="page-width">
     <div class="image-with-text">
       <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.layout == 'text_first' %} image-with-text__grid--reverse{% endif %}">
-        <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
+        <div class="image-with-text__media-item--{{ section.settings.desktop_image_width }} grid__item image-content-item">
           <div
-            class="image-with-text__media global-media-settings {% if section.settings.image != blank %} media custom-media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
+            class="image-with-text__media {% if section.settings.image != blank %} media custom-media{% else %} image-with-text__media--placeholder placeholder{% endif %}"
           >
             {%- if section.settings.image != blank -%}
               {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
@@ -98,22 +112,29 @@
           </div>
         </div>
         <div class="image-with-text__text-item grid__item block-content">
-          <h2 class="block-heading">{{ section.settings.description_title }}</h2>
-          <p class="">{{ section.settings.description_content }}</p>
+          <h2 class="block-heading" style="color: {{ section.settings.content_color }}">
+            {{ section.settings.description_title }}
+          </h2>
+          <p style="color: {{ section.settings.content_color }}">{{ section.settings.description_content }}</p>
           <div class="block-container">
             <div class="progress-bar">
-              <div class="progress-bar-inner" style="background: {{ section.settings.progres_bar_color }}"><span class="empty-element"></span></div>
+              <div class="progress-bar-inner" style="background: {{ section.settings.content_color }}">
+                <span class="empty-element"></span>
+              </div>
             </div>
 
             {% for block in section.blocks %}
               {% if block.type == 'text' %}
                 <div class="block-container-content">
                   <div class="block-title">
-                    <h3 class="block-title">
-                      <span class="checkpoint" style="background: {{ section.settings.progres_bar_color }}"></span><span>{{ block.settings.block_heading }}</span>
+                    <h3 class="block-title" style="color: {{ section.settings.content_color }};">
+                      <span class="checkpoint" style="background: {{ section.settings.content_color }}"></span
+                      ><span>{{ block.settings.block_heading }}</span>
                     </h3>
                   </div>
-                  <p class="block-content-description">{{ block.settings.block_description }}</p>
+                  <p class="block-content-description" style="color: {{ section.settings.content_color }}">
+                    {{ block.settings.block_description }}
+                  </p>
                 </div>
               {% endif %}
             {% endfor %}
@@ -129,6 +150,7 @@
     const blocks = document.querySelectorAll('.block-container-content');
     const progressBarInner = document.querySelector('.progress-bar-inner');
     const checkpoint = document.querySelector('.checkpoint');
+    const image = document.querySelector('.custom-media');
 
     function updateBlocksVisibility() {
       const viewportHeight = window.innerHeight;
@@ -158,11 +180,9 @@
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
       const totalHeight = containerHeight;
 
-      // Calculate the progress based on the scroll position
       const scrollPosition = Math.max(window.scrollY - containerTop, 0);
       const progress = Math.min((scrollPosition / totalHeight) * 100, 100);
 
-      // Find the height of the visible section
       let visibleHeight = 0;
       blocks.forEach((block) => {
         const blockRect = block.getBoundingClientRect();
@@ -171,6 +191,7 @@
 
         if (blockTop < viewportMiddle && blockBottom > window.scrollY) {
           visibleHeight += blockRect.height;
+
         }
       });
 
@@ -180,6 +201,7 @@
 
         progressBarInner.style.top = `${checkpointTop}px`;
         progressBarInner.style.height = `${Math.min((visibleHeight / containerHeight) * 100, 100)}%`;
+        
       }
     }
 
@@ -236,26 +258,6 @@
       "info": "t:sections.image-with-text.settings.layout.info"
     },
     {
-      "type": "select",
-      "id": "desktop_content_position",
-      "options": [
-        {
-          "value": "top",
-          "label": "t:sections.image-with-text.settings.desktop_content_position.options__1.label"
-        },
-        {
-          "value": "middle",
-          "label": "t:sections.image-with-text.settings.desktop_content_position.options__2.label"
-        },
-        {
-          "value": "bottom",
-          "label": "t:sections.image-with-text.settings.desktop_content_position.options__3.label"
-        }
-      ],
-      "default": "top",
-      "label": "t:sections.image-with-text.settings.desktop_content_position.label"
-    },
-    {
       "type": "text",
       "id": "description_title",
       "label": "Description title",
@@ -269,9 +271,9 @@
     },
     {
       "type": "color",
-      "id": "progres_bar_color",
+      "id": "content_color",
       "default": "#00026E",
-      "label": "Progress Bar Colour"
+      "label": "Content Colour"
     },
     {
       "type": "range",
