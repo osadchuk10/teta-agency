@@ -127,20 +127,6 @@
             "block_heading": "Set your heading",
             "block_description": "Set your description here in your block"
           }
-        },
-        "text_aGwARe": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
-        },
-        "text_pe7QLg": {
-          "type": "text",
-          "settings": {
-            "block_heading": "Set your heading",
-            "block_description": "Set your description here in your block"
-          }
         }
       },
       "block_order": [
@@ -150,9 +136,7 @@
         "text_fAN6Yi",
         "text_RzXdE3",
         "text_4h3PHc",
-        "text_nFkbBK",
-        "text_aGwARe",
-        "text_pe7QLg"
+        "text_nFkbBK"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/7eb280172822e19e22643261d9ac46ce.jpg",
@@ -160,7 +144,7 @@
         "layout": "image_first",
         "description_title": "What sets us apart",
         "description_content": "Our supplements are packed with the most effective ingredients out there, and nothing else.",
-        "content_color": "#00026E",
+        "content_color": "#00026e",
         "padding_top": 36,
         "padding_bottom": 36
       }
